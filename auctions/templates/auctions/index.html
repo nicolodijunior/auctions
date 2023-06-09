@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+{% block title %} Index {% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row g-4">
+            {% for listing in listings %}
+                <div class="col-md-6 col-lg-4 h-100 mt-3">
+                    <div class="card">
+                        <img src="{{listing.img_path}}" class="card-img-top" height="200">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'listing' listing.id %}">{{listing.title}}</a></h5>
+                            <p class="card-text">{{listing.description}}</p>
+                            <h5 class="card-title">Best Bid</h5>
+                            {% if best_bids|get_best_bid:listing.id %}
+                                {{ best_bids|get_best_bid:listing.id }}
+                            {% else %}
+                                <p>No bid yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
